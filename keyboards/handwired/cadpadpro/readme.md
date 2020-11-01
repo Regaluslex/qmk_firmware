@@ -1,13 +1,22 @@
 # cadpadpro
 
-![cadpadpro](imgur.com image replace me!)
+![cadpadpro](https://imgur.com/a/eo3qUqR)
 
 Macro pad with a design centered around an encoder and a keypad enter key for use in Bim and cad softwares. 
 The encoder and encoder switch pilot layers and functionalities 
 
+
+
 * Keyboard Maintainer: [regalex](https://github.com/Regaluslex)
-* Hardware Supported: CADPROPAD PCB designed by Regalex and made by JLCPCB, Arduino ATMega32U4 pro micro (with pro mini footprint)
+* Hardware Supported: Arduino ATMega32U4 pro micro (with pro mini footprint)
 * Hardware Availability: Links to where you can find this hardware
+
+  * Stainless steel plate
+  * Uses Gateron blue switches with DSA keycaps
+  * 3D printed chassis (still waiting)
+  * Handwired (Future update with PCB)
+  * Uses a Pro Micro
+  * Includes a reset switch accessible by a hole on the side
 
 Make example for this keyboard (after setting up your build environment):
 
