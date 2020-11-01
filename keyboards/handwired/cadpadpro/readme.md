@@ -1,6 +1,6 @@
 # cadpadpro
 
-![cadpadpro](https://imgur.com/a/eo3qUqR)
+![cadpadpro](https://i.imgur.com/En0kP5b.png)
 
 Macro pad with a design centered around an encoder and a keypad enter key for use in Bim and cad softwares. 
 The encoder and encoder switch pilot layers and functionalities 
