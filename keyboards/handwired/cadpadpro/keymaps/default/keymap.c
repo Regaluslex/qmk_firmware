@@ -138,24 +138,40 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RVT] = LAYOUT(
-    KC_ESC,   KC_SEGMENT,  KC_FITT, KC_ACC,  KC_BACKDL, \
-    ENC_TG,    KC_TABUL,   RVT_TR,  RVT_TY,  KC_ALIGN,  KC_ENT, \
-    RVT_ME,     KC_SPC,    CUT,     KC_COPY, KC_PASTE  \
+    /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
+                     KC_ESC,  KC_SEGMENT, KC_FITT,  KC_ACC,  KC_BACKDL, \
+    /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
+        ENC_TG,     KC_TABUL,   RVT_TR,   RVT_TY,   KC_ALIGN,  KC_ENT, \
+    /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
+         RVT_ME,     KC_SPC,     CUT,     KC_COPY,  KC_PASTE  \
+    /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ), \
     [_KPAD] = LAYOUT(
-    KC_ESC, KC_P7,  KC_P8, KC_P9, KC_BSPC, \
-    ENC_TG, KC_TAB,  KC_P4,  KC_P5, KC_P6, KC_PENT, \
-    KC_PDOT, KC_P0,  KC_P1, KC_P2, KC_P3 \
+    /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
+                     KC_ESC,    KC_P7,     KC_P8,    KC_P9,   KC_BSPC, \
+    /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
+          ENC_TG,    KC_TAB,    KC_P4,     KC_P5,    KC_P6,   KC_PENT, \
+    /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
+        KC_PDOT,    KC_P0,      KC_P1,     KC_P2,    KC_P3 \
+    /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ), \
     [_FN] = LAYOUT(
-                KC_ESC,     KC_F13, KC_F14, KC_F15,  KC_F16, \
-    ENC_TG,     BL_TOGG,    BL_INC, BL_DEC, BL_BRTG, KC_ENT, \
-    KC_NO,      SAVE,       CUT,    COPY,   PASTE \
+    /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
+                     KC_ESC,    KC_F13,    KC_F14,  KC_F15,    KC_F16, \
+    /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
+           ENC_TG,   BL_TOGG,   BL_INC,    BL_DEC,  BL_BRTG,   KC_ENT, \
+    /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
+          KC_NO,      SAVE,       CUT,     COPY,    PASTE \
+    /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ), \
     [_FPS] = LAYOUT(
-    KC_Q,       KC_W,   KC_E,   KC_R, KC_M,  \
-    ENC_TG,    KC_A,   KC_S,   KC_D, KC_F, KC_SPC, \
-    KC_LSHIFT,  KC_Z,   KC_X,   KC_C, KC_LCTL \
+    /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
+                      KC_Q,      KC_W,      KC_E,    KC_R,      KC_M,  \
+    /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
+           ENC_TG,    KC_A,      KC_S,      KC_D,    KC_F,     KC_SPC, \
+    /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
+        KC_LSHIFT,    KC_Z,      KC_X,      KC_C,   KC_LCTL \
+    /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ) \
 };
 
