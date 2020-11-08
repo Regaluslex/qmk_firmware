@@ -67,7 +67,6 @@ static char *current_alpha_oled = "****";
 //tapdance  Keycode definition
     enum {
         X_RESET,
-        X_BCKDEL,
         X_ALLCOPY,
         X_SEGMENT,
         X_ACC,
@@ -145,7 +144,7 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RVT] = LAYOUT(
     /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
-                     KC_ESC,  KC_SEGMENT, KC_FITT,  KC_ACC,  KC_BACKDL, \
+                     KC_ESC,  KC_SEGMENT, KC_FITT,  KC_ACC,    KC_DEL, \
     /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
          ENC_TG,    KC_TABUL,   KC_VIEW,  KC_TRTY,  KC_ALIGN,  KC_ENT, \
     /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
@@ -727,7 +726,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             [X_SEGMENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, seg_finished, seg_reset),
             [X_FITT] =  ACTION_TAP_DANCE_FN_ADVANCED(NULL, fit_finished, fit_reset),
             [X_ACC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, acc_finished, acc_reset),
-            [X_BCKDEL] = ACTION_TAP_DANCE_DOUBLE(KC_BSPC,KC_DEL),
             [X_COLLER] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,paste_finished,paste_reset),
             [X_TABUL] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, LSFT(KC_TAB)),
             [X_ALIGN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,align_finished,align_reset),
