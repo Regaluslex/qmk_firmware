@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define UNUSED_PINS
 #define OLED_DISPLAY_ADDRESS 0x3C
 #define OLED_TIMEOUT 30000
-#define SSD1306OLED
+//#define SSD1306OLED
 #define DEBOUNCE 5
 
 
