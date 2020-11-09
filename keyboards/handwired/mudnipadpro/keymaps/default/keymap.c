@@ -16,19 +16,24 @@
 
 #include QMK_KEYBOARD_H
 
-
 #ifdef POT_ENABLE
   #include "analog.h"
 #endif
-#include "process_midi.h"
-#include "keymap_french.h"
+//#include "process_midi.h"
+#include "midi.h"
 
-//extern MidiDevice midi_device;
+extern MidiDevice midi_device;
 
 // definitions
-
-enum midi_cc_keycodes_SYNTH {
-    MIDI_CC1 = SAFE_RANGE,
+enum custom_keycodes {
+    ENC_TG = SAFE_RANGE,
+    SAVE,
+    CUT,
+    COPY,
+    PASTE,
+    UNDO,
+    REDO,
+    MIDI_CC1,
     MIDI_CC2,
     MIDI_CC3,
     MIDI_CC4,
@@ -42,64 +47,24 @@ enum midi_cc_keycodes_SYNTH {
     MIDI_CC12
 };
 
-enum custom_keycodes {
-    ENC_TG = SAFE_RANGE,
-    SAVE,
-    CUT,
-    COPY,
-    PASTE,
-    UNDO,
-    REDO,
-    SELECT
-};
+
 static char current_ltrm_alpha_oled = '\0';
 static uint8_t current_MIDI_ccNumber         = 1;
 static char    current_MIDI_ccNumber_char[3] = {'0', '1', '\0'};
 static uint8_t current_layer;
 static uint8_t next_layer;
+int16_t pot_oldVal = 0;
+int16_t pot_val    = 0;
+int16_t pot_ccVal  = 0;
+#define POT_TOLERANCE 12
 
-
-/* #ifdef TAP_DANCE_ENABLE
-    #define KC_RESET    TD(X_RESET)
-    typedef struct {
-        bool is_press_action;
-        uint8_t state;
-    } tap;
-
-    //static bool numlocked = false;
-
-    enum {
-        SINGLE_TAP = 1,
-        SINGLE_HOLD,
-        DOUBLE_TAP,
-        DOUBLE_HOLD,
-        DOUBLE_SINGLE_TAP, // Send two single taps
-    };
-
-//tapdance  Keycode definition
-    enum {
-        X_RESET,
-        DEL_LINE
-    };
-
-    uint8_t cur_dance(qk_tap_dance_state_t *state);
-    void safe_reset(qk_tap_dance_state_t *state, void *user_data);
-
-#else
-    #define KC_RESET RESET
-    #define KC_COPY  COPY
-    #define KC_ECHAP KC_NLCK
-    #define KC_PASTE PASTE
-    #define KC_TABUL KC_TAB
-#endif
- */
 
 // Defines names for use in layer keycodes and the keymap
 enum custom_layers {
-    _FN = 0,
+    _FUNC = 0,
     _MUSIC,
     _SYNTH,
-    _MIDI,
+    _MIDI
 };
 
 
@@ -114,18 +79,18 @@ const uint8_t music_map[MATRIX_ROWS][MATRIX_COLS] = LAYOUT_NOENC(
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [_FN] = LAYOUT(
+    [_FUNC] = LAYOUT(
             KC_ESC, AU_TOG, MU_TOG, MU_MOD, \
-    ENC_TG, KC_TAB, SAVE,   SELECT, UNDO, \
+    ENC_TG, KC_TAB, SAVE,   KC_NO, UNDO, \
             CUT,    COPY,   PASTE,  REDO   \
     ), \
     [_MUSIC] = LAYOUT(
-             MU_TOG, KC_NO, KC_NO, KC_NO, \
+             KC_NO, KC_NO, KC_NO, KC_NO, \
     KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, \
              KC_NO,  KC_NO, KC_NO, KC_NO  \
     ), \
     [_SYNTH] = LAYOUT(
-             MI_C, MI_Db, MI_D, MI_Eb, \
+             MI_C, MI_Cs, MI_D, MI_Eb, \
     KC_TRNS, MI_E, MI_F, MI_Gb, MI_G,  \
              MI_Ab, MI_A, MI_Bb, MI_B  \
     ), \
@@ -141,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         void oled_render_layers(void){
             oled_write_P(PSTR("LAYER: "), false);
             switch (get_highest_layer(layer_state)) {
-                case _FN:
+                case _FUNC:
                     oled_write_P(PSTR("FUNCTION\n"), false);
                     break;
                 case _MUSIC:
@@ -192,26 +157,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     void encoder_update_user(uint8_t index, bool clockwise) {
 
         switch (biton32(layer_state)) {
-            case _FN:
-                if (clockwise) {
-                    tap_code(KC_VOLU);
-                } else {
-                    tap_code(KC_VOLD);
-                }
-                break;
-            case _FUNC:
-                if (clockwise) {
-                    tap_code(KC_BRIGHTNESS_UP);
-
-                } else {
-                    tap_code(KC_BRIGHTNESS_DOWN);
-                }
-                break;
-            case _LTRM:
+            case _MIDI:
                 if (clockwise) {
                     midi_send_cc(&midi_device, 0, current_MIDI_ccNumber, 65);
                 } else {
                     midi_send_cc(&midi_device, 0, current_MIDI_ccNumber, 63);
+                }
+                break;
+            default:
+                if (clockwise) {
+                    tap_code(KC_VOLU);
+                } else {
+                    tap_code(KC_VOLD);
                 }
                 break;
         }
@@ -227,40 +184,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case CUT:
             if (record->event.pressed) {
-                tap_code16(LCTL(FR_X));
+                tap_code16(LCTL(KC_X));
             }
             break;
         case COPY:
             if (record->event.pressed) {
-                tap_code16(LCTL(FR_C));
+                tap_code16(LCTL(KC_C));
             }
             break;
         case PASTE:
             if (record->event.pressed) {
-                tap_code16(LCTL(FR_V));
+                tap_code16(LCTL(KC_V));
             }
             break;
         case SAVE:
             if (record->event.pressed) {
-                tap_code16(LCTL(FR_S));
+                tap_code16(LCTL(KC_S));
             }
             break;
         case UNDO:
             if (record->event.pressed) {
-                tap_code16(LCTL(FR_Z));
+                tap_code16(LCTL(KC_W));
             }
             break;
         case REDO:
             if (record->event.pressed) {
-                tap_code16(LCTL(FR_Y));
-            }
-            break;
-        case SELECT:
-            if (record->event.pressed) {
-                register_code(KC_LCTL);
-                register_code(FR_A);
-                unregister_code(FR_A);
-                unregister_code(KC_LCTL);
+                tap_code16(LCTL(KC_Y));
             }
             break;
         case ENC_TG:
@@ -268,7 +217,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 current_layer = biton32(layer_state);
                 next_layer = current_layer+1;
                 if (next_layer > _MIDI) {
-                    next_layer = _FN;
+                    next_layer = _FUNC;
                     layer_move(next_layer);
                     dprintf("current layer: %u", current_layer);
                 } else {
@@ -405,12 +354,15 @@ void keyboard_post_init_user(void) {
 }
 
 void matrix_init_user(void) {
+    #ifdef POT_ENABLE
+        analogReference(ADC_REF_POWER);
+    #endif
     return;
 }
 
 void matrix_scan_user(void) {
 #ifdef POT_ENABLE
-    pot_val   = (analogReadPin(F6));
+    pot_val   = (analogReadPin(D4));
     pot_ccVal = pot_val / 8;
     if (abs(pot_val - pot_oldVal) > POT_TOLERANCE) {
         pot_oldVal = pot_val;

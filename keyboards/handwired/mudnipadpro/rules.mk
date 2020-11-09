@@ -26,7 +26,7 @@ AUDIO_ENABLE = yes           # Audio output on port C6
 FAUXCLICKY_ENABLE = no      # Use buzzer to emulate clicky switches
 HD44780_ENABLE = no 		# Enable support for HD44780 based LCDs
 RGBLIGHT_ENABLE = no       # Enable keyboard RGB underglow
-MIDI_ENABLE = no
+MIDI_ENABLE = yes
 #Hardware options
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 OLED_DRIVER_ENABLE = yes   # Enables the use of OLED displays
@@ -40,5 +40,6 @@ TERMINAL_ENABLE = no
 BLUETOOTH_ENABLE = no
 UNICODEMAP_ENABLE = no
 UNICODE_ENABLE = no
-POT_ENABLE = true
+POT_ENABLE = yes
+SRC += analog.c
 EXTRAFLAGS += -flto
