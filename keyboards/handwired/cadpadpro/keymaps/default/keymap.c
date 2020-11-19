@@ -48,7 +48,8 @@ static uint8_t strcount = 0;
     #define KC_BACKDL   TD(X_BCKDEL)
     #define KC_TRTY     TD(X_TRTY)
     #define KC_VIEW     TD(X_VIEW)
-
+    #define KC_MENT     MT(MOD_LCTL, KC_ENT)
+    #define KC_MSPC     MT(MOD_LCTL, KC_SPC)
     typedef struct {
         bool is_press_action;
         uint8_t state;
@@ -107,6 +108,8 @@ static char *current_alpha_oled = "****";
     #define KC_ECHAP KC_NLCK
     #define KC_PASTE PASTE
     #define KC_TABUL KC_TAB
+    #define KC_MENT  KC_ENT
+    #define KC_MSPC  KC_SPC
 #endif
 
 
@@ -146,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
                      KC_ESC,  KC_SEGMENT, KC_FITT,  KC_ACC,    KC_DEL, \
     /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
-         ENC_TG,    KC_TABUL,   KC_VIEW,  KC_TRTY,  KC_ALIGN,  KC_ENT, \
+         ENC_TG,    KC_TABUL,   KC_VIEW,  KC_TRTY,  KC_ALIGN,  KC_MENT, \
     /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
          RVT_ME,     KC_SPC,     CUT,     KC_COPY,  KC_PASTE  \
     /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
@@ -173,9 +176,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
                       KC_Q,      KC_W,      KC_E,    KC_R,      KC_M,  \
     /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
-         ENC_TG,      KC_A,      KC_S,      KC_D,    KC_F,     KC_SPC, \
+         ENC_TG,      KC_A,      KC_S,      KC_D,    KC_F,    KC_MSPC, \
     /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
-        KC_LSHIFT,    KC_Z,      KC_X,      KC_C,   KC_LCTL \
+        KC_LSHIFT,    KC_Z,      KC_X,      KC_C,    KC_V \
     /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ) \
 };
