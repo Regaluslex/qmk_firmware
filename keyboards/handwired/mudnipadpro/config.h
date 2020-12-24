@@ -29,13 +29,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* key matrix size */
 #define MATRIX_ROWS 3
-#define MATRIX_COLS 5
+#define MATRIX_COLS 6
 #define MATRIX_ROW_PINS {B2, B4, E6}
-#define MATRIX_COL_PINS { F7, B1, B3, B6, B5}
+#define MATRIX_COL_PINS { F7, B1, B3, B6, B5, D7}
 #define DIODE_DIRECTION COL2ROW
 #define ENCODERS_PAD_A { F5 }
 #define ENCODERS_PAD_B { F4 }
-#define C6_AUDIO
+
+#define RGB_DI_PIN D0
+#define RGBLED_NUM 3
+#define RGBLIGHT_EFFECT_RAINBOW_MOOD
+#define RGBLIGHT_HUE_STEP 8
+#define RGBLIGHT_SAT_STEP 8
 #define UNUSED_PINS
 #define OLED_DISPLAY_ADDRESS 0x3C
 #define OLED_TIMEOUT 30000
@@ -47,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define C6_AUDIO
     #define PITCH_STANDARD_A 432.0f
     #define STARTUP_SONG SONG(STARTUP_SOUND)
-    #define MUSIC_MAP
+    #define NO_MUSIC_MODE
 #endif
 
 /* disable these deprecated features by default */
