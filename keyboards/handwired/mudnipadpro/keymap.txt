@@ -1,4 +1,4 @@
-#include "pheromone.h"
+//#include "pheromone.h"
 #ifdef POT_ENABLE
   #include "analog.h"
 #endif
@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                      KC_LGUI, KC_LALT, KC_LCTL
                      #elif defined(MOD_SEQUENCE_WCA)
                      KC_LGUI, KC_LCTL, KC_LALT
-                     #elif defined(MOD_SEQUENCE_AWC) 
+                     #elif defined(MOD_SEQUENCE_AWC)
                      KC_LALT, KC_LGUI, KC_LCTL
                      #elif defined(MOD_SEQUENCE_ACW)
                      KC_LALT, KC_LCTL, KC_LGUI

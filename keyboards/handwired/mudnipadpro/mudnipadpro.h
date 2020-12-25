@@ -17,24 +17,13 @@
 #pragma once
 #include "quantum.h"
 
+
 #define LAYOUT( \
-         K01, K02, K03, K04, \
-    K10, K11, K12, K13, K14, \
-         K21, K22, K23, K24\
+    K01, K02, K03, K04, K05, \
+    K10, K11, K12, K13, K14, K15, \
+    K20, K21, K22, K23, K24\
 ) { \
-    { KC_NO, K01, K02, K03, K04}, \
-    { K10,   K11, K12, K13, K14}, \
-    { KC_NO, K21, K22, K23, K24} \
-}
-
-
-
-#define LAYOUT_NOENC( \
-    K01, K02, K03, K04, \
-    K11, K12, K13, K14, \
-    K21, K22, K23, K24\
-) { \
-    { KC_NO, K01, K02, K03, K04}, \
-    { KC_NO, K11, K12, K13, K14}, \
-    { KC_NO, K21, K22, K23, K24} \
+    { KC_NO, K01, K02, K03, K04, K05}, \
+    { K10,   K11, K12, K13, K14, K15}, \
+    { K20,   K21, K22, K23, K24, KC_NO} \
 }

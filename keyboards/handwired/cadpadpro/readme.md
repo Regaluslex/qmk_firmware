@@ -7,7 +7,7 @@ The encoder and encoder switch pilot layers and functionalities
 
 
 
-* Keyboard Maintainer: [regalex](https://github.com/Regaluslex)
+* Keyboard Maintainer: [Regalusex](https://github.com/Regaluslex)
 * Hardware Supported: Arduino ATMega32U4 pro micro (with pro mini footprint)
 * Hardware Availability: Links to where you can find this hardware
 

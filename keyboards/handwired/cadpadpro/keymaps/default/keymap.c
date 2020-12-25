@@ -22,12 +22,12 @@
 
 #ifdef ENCODER_ENABLE
 
-    // encoder statre for funciton rotation
+    // encoder statre for function rotation
     enum custom_state {
         DEFAULT = 0,
         VOLUME,
-        ZEEWHY,
-        BACKLIGHT
+        ZEEWHY
+//        BACKLIGHT
         };
 
     static uint8_t mytoggle = DEFAULT;
@@ -42,12 +42,14 @@ static uint8_t strcount = 0;
     #define KC_SEGMENT  TD(X_SEGMENT)
     #define KC_FITT     TD(X_FITT)
     #define KC_ACC      TD(X_ACC)
-    //#define KC_ECHAP    TD(X_ECHAP)
     #define KC_PASTE    TD(X_COLLER)
     #define KC_TABUL    TD(X_TABUL)
     #define KC_ALIGN    TD(X_ALIGN)
     #define KC_BACKDL   TD(X_BCKDEL)
-
+    #define KC_TRTY     TD(X_TRTY)
+    #define KC_VIEW     TD(X_VIEW)
+    #define KC_MENT     MT(MOD_LCTL, KC_ENT)
+    #define KC_MSPC     MT(MOD_LCTL, KC_SPC)
     typedef struct {
         bool is_press_action;
         uint8_t state;
@@ -66,7 +68,6 @@ static char *current_alpha_oled = "****";
 //tapdance  Keycode definition
     enum {
         X_RESET,
-        X_BCKDEL,
         X_ALLCOPY,
         X_SEGMENT,
         X_ACC,
@@ -75,6 +76,8 @@ static char *current_alpha_oled = "****";
         X_TABUL,
         X_ALIGN,
         X_ECHAP,
+        X_TRTY,
+        X_VIEW,
         DEL_LINE,
     };
 
@@ -94,6 +97,10 @@ static char *current_alpha_oled = "****";
     void esc_reset(qk_tap_dance_state_t *state, void *user_data);
     void align_finished(qk_tap_dance_state_t *state, void *user_data);
     void align_reset(qk_tap_dance_state_t *state, void *user_data);
+    void view_finished(qk_tap_dance_state_t *state, void *user_data);
+    void view_reset(qk_tap_dance_state_t *state, void *user_data);
+    void trty_finished(qk_tap_dance_state_t *state, void *user_data);
+    void trty_reset(qk_tap_dance_state_t *state, void *user_data);
     size_t strlen(const char *str);
 #else
     #define KC_RESET RESET
@@ -101,6 +108,8 @@ static char *current_alpha_oled = "****";
     #define KC_ECHAP KC_NLCK
     #define KC_PASTE PASTE
     #define KC_TABUL KC_TAB
+    #define KC_MENT  KC_ENT
+    #define KC_MSPC  KC_SPC
 #endif
 
 
@@ -119,10 +128,9 @@ enum custom_layers {
 enum custom_keycodes {
     RVT_VG = SAFE_RANGE,
     RVT_TG,
-    RVT_TR,
-    RVT_ME,
     RVT_TY,
     RVT_CAD,
+    RVT_ME,
     SAVE,
     RVT_HIDE,
     CUT,
@@ -138,24 +146,40 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RVT] = LAYOUT(
-    KC_ESC,   KC_SEGMENT,  KC_FITT, KC_ACC,  KC_BACKDL, \
-    ENC_TG,    KC_TABUL,   RVT_TR,  RVT_TY,  KC_ALIGN,  KC_ENT, \
-    RVT_ME,     KC_SPC,    CUT,     KC_COPY, KC_PASTE  \
+    /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
+                     KC_ESC,  KC_SEGMENT, KC_FITT,  KC_ACC,    KC_DEL, \
+    /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
+         ENC_TG,    KC_TABUL,   KC_VIEW,  KC_TRTY,  KC_ALIGN,  KC_MENT, \
+    /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
+         RVT_ME,     KC_SPC,     CUT,     KC_COPY,  KC_PASTE  \
+    /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ), \
     [_KPAD] = LAYOUT(
-    KC_ESC, KC_P7,  KC_P8, KC_P9, KC_BSPC, \
-    ENC_TG, KC_TAB,  KC_P4,  KC_P5, KC_P6, KC_PENT, \
-    KC_PDOT, KC_P0,  KC_P1, KC_P2, KC_P3 \
+    /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
+                     KC_ESC,    KC_P7,     KC_P8,    KC_P9,   KC_BSPC, \
+    /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
+         ENC_TG,     KC_TAB,    KC_P4,     KC_P5,    KC_P6,   KC_PENT, \
+    /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
+        KC_PDOT,    KC_P0,      KC_P1,     KC_P2,    KC_P3 \
+    /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ), \
     [_FN] = LAYOUT(
-                KC_ESC,     KC_F13, KC_F14, KC_F15,  KC_F16, \
-    ENC_TG,     BL_TOGG,    BL_INC, BL_DEC, BL_BRTG, KC_ENT, \
-    KC_NO,      SAVE,       CUT,    COPY,   PASTE \
+    /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
+                     KC_ESC,    KC_F13,    KC_F14,  KC_F15,    KC_F16, \
+    /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
+         ENC_TG,    BL_TOGG,   BL_INC,    BL_DEC,  BL_BRTG,   KC_ENT, \
+    /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
+         KC_NO,       SAVE,       CUT,     COPY,    PASTE \
+    /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ), \
     [_FPS] = LAYOUT(
-    KC_Q,       KC_W,   KC_E,   KC_R, KC_M,  \
-    ENC_TG,    KC_A,   KC_S,   KC_D, KC_F, KC_SPC, \
-    KC_LSHIFT,  KC_Z,   KC_X,   KC_C, KC_LCTL \
+    /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
+                      KC_Q,      KC_W,      KC_E,    KC_R,      KC_M,  \
+    /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
+         ENC_TG,      KC_A,      KC_S,      KC_D,    KC_F,    KC_MSPC, \
+    /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
+        KC_LSHIFT,    KC_Z,      KC_X,      KC_C,    KC_V \
+    /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
     ) \
 };
 
@@ -286,7 +310,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         }
 
     //backlight logo render definition
-        static void render_backlight_logo(void) {
+ /*        static void render_backlight_logo(void) {
             static const char PROGMEM backlight_logo[] = {
                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -323,6 +347,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 };
             oled_write_raw_P(backlight_logo, sizeof(backlight_logo));
         }
+ */
 
     //Oled Render routine
         void oled_task_user(void) {
@@ -333,8 +358,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 case ZEEWHY:
                     render_zeewye_logo();
                     break;
-                case BACKLIGHT:
-                    render_backlight_logo();
+//                case BACKLIGHT:
+//                    render_backlight_logo();
                     break;
                 default:
                     oled_render_layers();
@@ -362,17 +387,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 if (clockwise) tap_code16(LCTL(FR_Y));
                 else tap_code16(LCTL(FR_Z));
                 break;
-            case BACKLIGHT:
+/*             case BACKLIGHT:
                 if (clockwise) {
                     backlight_increase();
                     }
                 else backlight_decrease();
                 break;
             //weirdly enough, this combination control the screen brightness level in OSX
-            /*  case BACKLIGHT:
-                    if (clockwise) {tap_code16(BL_INC);}
-                    else tap_code16(BL_DEC);
-                break; */
+            //  case BACKLIGHT:
+            //        if (clockwise) {tap_code16(BL_INC);}
+            //        else tap_code16(BL_DEC);
+            //    break; */
             default:
                 if (clockwise) {
                     current_layer = biton32(layer_state);
@@ -602,6 +627,64 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             xtap_state.state = 0;
         }
 
+    //Trim & Ajust  Angle or single element
+        void trty_finished(qk_tap_dance_state_t *state, void *user_data) {
+            xtap_state.state = cur_dance(state);
+            register_code(FR_T);
+            unregister_code(FR_T);
+        }
+
+        void trty_reset(qk_tap_dance_state_t *state, void *user_data) {
+            switch (xtap_state.state) {
+                case SINGLE_TAP:
+                    register_code(FR_R);
+                    unregister_code(FR_R);
+                    current_alpha_oled = "ANGLE";
+                    break;
+                case SINGLE_HOLD:
+                    register_code(FR_Y);
+                    unregister_code(FR_Y);
+                    current_alpha_oled = "SINGLE";
+                    break;
+            }
+            xtap_state.state = 0;
+        }
+
+
+    // Visibility Keydance
+        void view_finished(qk_tap_dance_state_t *state, void *user_data) {
+            xtap_state.state = cur_dance(state);
+            switch (xtap_state.state) {
+                case SINGLE_TAP:
+                    register_code(FR_V);
+                    unregister_code(FR_V);
+                    register_code(FR_G);
+                    unregister_code(FR_G);
+                    current_alpha_oled = "VISIBILITY";
+                    break;
+                case SINGLE_HOLD:
+                    register_code(FR_B);
+                    unregister_code(FR_B);
+                    register_code(FR_X);
+                    unregister_code(FR_X);
+                    current_alpha_oled = "BOX VIEW";
+                    break;
+                case DOUBLE_TAP:
+                    register_code(FR_W);
+                    unregister_code(FR_W);
+                    register_code(FR_T);
+                    unregister_code(FR_T);
+                    current_alpha_oled = "TILE VIEW";
+                    break;
+            }
+        }
+
+        void view_reset(qk_tap_dance_state_t *state, void *user_data) {
+            xtap_state.state = 0;
+        }
+
+
+
     /*   //makeshift function layer with esc key tapdancing
         void esc_finished(qk_tap_dance_state_t *state, void *user_data) {
             uint8_t current_layer;
@@ -645,6 +728,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         }
     */
 
+
     //tap dancing actions enumerations
         qk_tap_dance_action_t tap_dance_actions[] = {
             [X_RESET] = ACTION_TAP_DANCE_FN(safe_reset),
@@ -652,11 +736,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             [X_SEGMENT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, seg_finished, seg_reset),
             [X_FITT] =  ACTION_TAP_DANCE_FN_ADVANCED(NULL, fit_finished, fit_reset),
             [X_ACC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, acc_finished, acc_reset),
-            [X_BCKDEL] = ACTION_TAP_DANCE_DOUBLE(KC_BSPC,KC_DEL),
             [X_COLLER] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,paste_finished,paste_reset),
             [X_TABUL] = ACTION_TAP_DANCE_DOUBLE(KC_TAB, LSFT(KC_TAB)),
-            [X_ALIGN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,align_finished,align_reset),/* ,
-            [X_ECHAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, esc_finished,esc_reset) */
+            [X_ALIGN] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,align_finished,align_reset),
+            [X_TRTY] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, trty_finished, trty_reset),
+            [X_VIEW] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, view_finished, view_reset)
         };
 
 #endif
@@ -676,24 +760,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 register_code(FR_G);
                 unregister_code(FR_G);
                 current_alpha_oled = "TAG";
-            }
-            break;
-        case RVT_TR:
-            if (record->event.pressed) {
-                register_code(FR_T);
-                unregister_code(FR_T);
-                register_code(FR_R);
-                unregister_code(FR_R);
-                current_alpha_oled = "ELBOW";
-            }
-            break;
-        case RVT_TY:
-            if (record->event.pressed) {
-                register_code(FR_T);
-                unregister_code(FR_T);
-                register_code(FR_Y);
-                unregister_code(FR_Y);
-                current_alpha_oled = "TEE";
             }
             break;
         case RVT_ME:
@@ -776,7 +842,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case ENC_TG:
             if (record->event.pressed) {
-                if(mytoggle < BACKLIGHT) {
+                if(mytoggle < ZEEWHY) {
                     mytoggle = mytoggle +1;
                 } else {
                     oled_clear();
