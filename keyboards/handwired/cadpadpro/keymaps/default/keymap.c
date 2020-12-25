@@ -651,7 +651,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         }
 
 
-    // Pipe or Duct segment
+    // Visibility Keydance
         void view_finished(qk_tap_dance_state_t *state, void *user_data) {
             xtap_state.state = cur_dance(state);
             switch (xtap_state.state) {
@@ -668,6 +668,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     register_code(FR_X);
                     unregister_code(FR_X);
                     current_alpha_oled = "BOX VIEW";
+                    break;
+                case DOUBLE_TAP:
+                    register_code(FR_W);
+                    unregister_code(FR_W);
+                    register_code(FR_T);
+                    unregister_code(FR_T);
+                    current_alpha_oled = "TILE VIEW";
                     break;
             }
         }
