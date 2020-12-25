@@ -46,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OLED_TIMEOUT 30000
 //#define SSD1306OLED
 #define DEBOUNCE 5
-
+#define TAPPING_TERM 200
 
 #ifdef AUDIO_ENABLE
     #define C6_AUDIO

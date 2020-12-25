@@ -62,7 +62,7 @@ enum custom_layers {
     qk_tap_dance_action_t tap_dance_actions[] = {
         [TD_PLENT] = ACTION_TAP_DANCE_DOUBLE(KC_PPLS, KC_PENT),
         [TD_MULT_DIV] = ACTION_TAP_DANCE_DOUBLE(KC_PAST, KC_PSLS)
-    }
+    };
 
 #else
     #define KC_PLENT    KC_PPLS
@@ -95,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
         [_FN] = LAYOUT(
     /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
-                    TG(_FPS),  CG_SWAP,    KC_F13,   KC_F14,    KC_F15, \
+                    TG(_FPS),  CG_SWAP,    KC_F13,   KC_F14,  KC_F15, \
     /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
         KC_TRNS,   RGB_TOG,  RGB_MOD,   RGB_VAI,  RGB_SAI,   KC_ENT, \
     /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
@@ -106,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*            ┌──────────┬──────────┬─────────┬─────────┬──────────┐ */
                      KC_ESC,     KC_Q,      KC_W,     KC_E,    KC_R, \
     /*            ├──────────┼──────────┼─────────┼─────────┼──────────┤ */
-        TG(_KPAD),   KC_TAB,     KC_A,      KC_S,     KC_D,    KC_SPC, \
+        TO(_KPAD),   KC_TAB,     KC_A,      KC_S,     KC_D,    KC_SPC, \
     /*┌───────────┼──────────┼──────────┼─────────┼─────────┤          | */
         KC_LSHIFT,    KC_Z,      KC_X,     KC_C,    KC_LCTL \
     /*└───────────┴──────────┴──────────┴─────────┴─────────┴──────────┘ */
