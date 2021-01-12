@@ -120,18 +120,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
      if (record->event.pressed) {
         switch(keycode) {
             case P_MACRO:
-                register_code(KC_NLCK);
-                unregister_code(KC_NLCK);
-                tap_code(KC_P7);
-                tap_code(KC_P3);
-                tap_code(KC_P6);
-                tap_code(KC_P2);
-                tap_code(KC_P8);
-                tap_code(KC_P3);
-                register_code(KC_NLCK);
-                unregister_code(KC_NLCK);
-                tap_code(KC_ENT);
-                break;
+                
             case XBX_VID:
                 register_code(KC_LGUI);
                 register_code(KC_LALT);
