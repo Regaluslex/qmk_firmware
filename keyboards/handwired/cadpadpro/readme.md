@@ -1,4 +1,4 @@
-# cadpadpro
+# Regluslex' CadPadPro
 
 ![cadpadpro](https://i.imgur.com/En0kP5b.png)
 
