@@ -26,3 +26,11 @@
     { K10,   K11, K12, K13, K14, K15}, \
     { K20,   K21, K22, K23, K24, KC_NO} \
 }
+
+#if defined(KEYBOARD_cadpadpro_basic)
+    #include "light.h"
+#elif defined(KEYBOARD_cadpadpro_original)
+    #include "original.h"
+#elif defined(KEYBOARD_cadpadpro_bright)
+    #include "bright.h"
+#endif
