@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "config_common.h"
 
+
 /* USB Device descriptor parameter */
 #define VENDOR_ID  0xFEED
 #define PRODUCT_ID 0x0504
@@ -35,15 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DIODE_DIRECTION COL2ROW
 #define ENCODERS_PAD_A { F5 }
 #define ENCODERS_PAD_B { F4 }
-#define BACKLIGHT_PIN C6
-#define BACKLIGHT_LEVELS 12
-#define BACKLIGHT_BREATHING
-#define BREATHING_PERIOD 6
-#define UNUSED_PINS
-#define OLED_DISPLAY_ADDRESS 0x3C
-#define OLED_TIMEOUT 60000
-//#define OLED_DISABLE_TIMEOUT
-#define SSD1306OLED
+
 #define DEBOUNCE 5
 #define TAPPING_TERM 200
 
@@ -51,10 +44,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_MACRO
 //#define NO_ACTION_FUNCTION
 
-
 #ifndef NO_DEBUG
 #define NO_DEBUG
 #endif // !NO_DEBUG
 #if !defined(NO_PRINT) && !defined(CONSOLE_ENABLE)
 #define NO_PRINT
 #endif // !NO_PRINT
+
